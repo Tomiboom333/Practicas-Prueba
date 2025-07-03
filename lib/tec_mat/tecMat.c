@@ -33,7 +33,7 @@ void tecMat_Init(int f1, int f2, int f3, int f4, int c1, int c2, int c3, int c4)
             GPIOA -> CRH &= ~(0xF<<(filas[i] % 8)*4);
             GPIOA->CRH |=  (1 << ((filas[i] % 8)*4));// output push-pull
         }
-        GPIOA -> BSRR |= (1<<columnas[i]);
+        GPIOA -> BSRR |= (1<<filas[i]);
     }
 }
 

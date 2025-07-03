@@ -32,7 +32,7 @@ void motor(float grados){
                 else GPIOA -> BSRR |= (1<< (Cmotor[j]+ 16));
             }
             delay_ms(5);
-        }
+        }             
         break;
 
         case 2:
