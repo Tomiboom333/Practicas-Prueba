@@ -11,8 +11,8 @@ int main(void){
         GPIOA -> CRL |= (1<<(sens[i]*4));
         AFIO -> EXTICR[0] &= (0xF << (sens[i]*4));
         EXTI -> IMR |= (1<<sens[i]);
-        EXTI -> RTSR |= (1<<sens[i]);
-        EXTI -> FTSR &= (1<<sens[i]);
+        EXTI -> RTSR &= ~(1<<sens[i]);
+        EXTI -> FTSR |= (1<<sens[i]);
     }
 
     NVIC_EnableIRQ(EXTI0_IRQn);
