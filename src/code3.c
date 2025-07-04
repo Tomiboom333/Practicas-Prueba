@@ -27,6 +27,7 @@ int main(){
             TecToBCD(num);
         }
     }
+    return 0;
 }
 
 void EXTI0_IRQHandler(void){

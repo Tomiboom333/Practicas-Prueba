@@ -23,6 +23,7 @@ int main(void){
         direccion = 0;
         motor(60);
     }
+    return 0;
 }
 
 void EXTI0_IRQHandler(void){
