@@ -11,19 +11,18 @@ int i=0;
 int pos=0;
 int checking=0;
 bool correcto=false, hash=false;
-int main(void) {
+int main(void){
     tecMat_Init (1, 2, 3, 4, 5, 6, 7, 8);
 
     GPIOA -> CRH &= ~(0xF << (ledV%8)*4);
     GPIOA -> CRH |= (1<<(ledV%8)*4);//pin 9, led verde OUTPUT PUSH-PULL 
 
     GPIOA -> CRH &= ~(0xF << (ledR%8)*4);
-    GPIOA -> CRH |= (1<<(ledR%8)*4);//pin 10, led rojo OUTPUT PUSH-PULL 
+    GPIOA -> CRH |= (1<<(ledR%8)*4);//pin 10, led rojo OUTPUT PUSH-PULL
 
-    while (1) { 
+    while (1){
         char caract = tecMat(1, 2, 3, 4, 5, 6, 7, 8);
         if(caract!='x'){
-           
             if(hash){
                     pwn[pos] = caract;
                     pos++;
