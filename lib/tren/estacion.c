@@ -5,10 +5,10 @@
 #include "stm32f103xb.h"
 int Cmotor[4]= {2,3,4,5};
 int pasoN[4][4]={
-    {1,1,0,0},
-    {0,1,1,0},
-    {0,0,1,1},
-    {1,0,0,1}
+    {1,1,0,0},//0
+    {0,1,1,0},//1
+    {0,0,1,1},//2
+    {1,0,0,1}//3
 };
 int pasos, pasoActual;
 volatile int direccion = 0;
@@ -34,7 +34,6 @@ void motor(float grados){
             delay_ms(5);
         }             
         break;
-
         case 2:
         for(int i = 0; i <pasos;i++){
             pasoActual = 3-(i%4);
@@ -45,7 +44,6 @@ void motor(float grados){
             delay_ms(5);
         }
         break;
-
         default:
         break;
     }

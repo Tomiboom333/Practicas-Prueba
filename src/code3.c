@@ -17,9 +17,11 @@ int main(){
     AFIO -> IMR |= (1 << boton); //habilito interrupcion externa en el pin del boton
     AFIO -> RTSR |= (1 << boton); //habilito interrupcion por flanco de subida
     AFIO -> FTSR &= ~(1 << boton); //deshabilito interrupcion por flanco de bajada
+    NVIC_EnableIRQ(EXTI0_IRQn);
+    NVIC_SetPriority(EXTI0_IRQn,1);
 
     while(1){
-        num = tecMat(1,2,3,4,5,6,7,8)
+        num = tecMat(1,2,3,4,5,6,7,8);
         if(boton){
             boton = false;
             TecToBCD(num);
