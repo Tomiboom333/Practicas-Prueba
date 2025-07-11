@@ -11,7 +11,8 @@ int pasoN[4][4]={
     {1,0,0,1}//3
 };
 int pasos, pasoActual;
-volatile int direccion = 0;
+bool avance;
+int pasoTotal = 0, pasoObj;
 void motor_Init() {
     RCC -> APB2ENR |= RCC_APB2ENR_IOPAEN;
     RCC -> APB2ENR |= RCC_APB2ENR_AFIOEN;
@@ -20,31 +21,35 @@ void motor_Init() {
         GPIOA -> CRL |= (0b0001<<(Cmotor[i]*4));//floating input
     }
 }
-void motor(float grados){
-    pasos = (int)(grados/1.8);
-    switch (direccion){
-        case 1:
-        delay_ms(10000);
-        for(int i = 0; i<pasos ;i++){
+void motor(int grados){
+    pasoObj = (int)((float)(grados)/1.8);
+|   if(pasoTotal < pasoObj){
+        avance = true;
+        pasos = pasoObj - pasoTotal;
+    }
+    else{
+        avance = false;
+        pasos = pasoTotal - pasoObj;
+    }
+    if(avance){
+        for(int i = pasoTotal; i<pasos ;i++){
             pasoActual = i%4;
             for(int j=0;j<4;j++){
                 if(pasoN[pasoActual][j]) GPIOA -> BSRR |= (1<< Cmotor[j]);
                 else GPIOA -> BSRR |= (1<< (Cmotor[j]+ 16));
             }
-            delay_ms(5);
-        }             
-        break;
-        case 2:
-        for(int i = 0; i <pasos;i++){
-            pasoActual = 3-(i%4);
-            for(int j=0;j<4;j++){
-                if(pasoN[pasoActual][j]) GPIOA -> BSRR |= (1<< (Cmotor[j]));
-                else GPIOA -> BSRR |= (1<< Cmotor[j]+16);
-            }
-            delay_ms(5);
+        delay_ms(5);
         }
-        break;
-        default:
-        break;
+        pasoTotal = pasoObj;
+    }else{
+        for(int i = pasoTotal; i<pasos ;i--){
+            pasoActual = i%4;
+            for(int j=0;j<4;j++){
+                if(pasoN[pasoActual][j]) GPIOA -> BSRR |= (1<< Cmotor[j]);
+                else GPIOA -> BSRR |= (1<< (Cmotor[j]+ 16));
+            }
+        delay_ms(5);
+        }
+        pasoTotal = pasoObj;
     }
 }

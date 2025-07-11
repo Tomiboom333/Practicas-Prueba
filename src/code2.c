@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #include "stm32f103xb.h"
 int sens[2]={0,1};
-volatile int direccion;
+volatile int barrera;
 int main(void){
     motor_Init();
     
@@ -20,8 +20,12 @@ int main(void){
     NVIC_SetPriority(EXTI0_IRQn,1);
     NVIC_SetPrority(EXTI1_IRQn,1);
     while(1){
-        direccion = 0;
-        motor(60);
+        if(barrera = 1) motor(0);
+        if(barrera = 2) {
+            delay_ms(10000);
+            motor(60);
+        }
+        barrera = 0;
     }
     return 0;
 }
@@ -29,12 +33,12 @@ int main(void){
 void EXTI0_IRQHandler(void){
     if(EXTI -> PR & (1<< sens[0])){
         EXTI -> PR |= (1<< sens[0]);
-        direccion = 2;
+        barrera = 1;
     }
 }
 void EXTI1_IRQHandler(void){
     if(EXTI -> PR & (1<< sens[1])){
         EXTI -> PR |= (1<< sens[1]);
-        direccion = 1;
+        barrera = 2;
     }
 }
